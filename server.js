@@ -10,6 +10,10 @@ const PORT = 8001;
 
 
 const server = http.createServer(async (req, res) => {
+    if (req.url === '/live-price') {
+        const { handleLive } = await import('./handlers/routeHandlers.js');
+        return handleLive(req, res);
+    }
   await serveStatic(req, res, __dirname);
 });
 

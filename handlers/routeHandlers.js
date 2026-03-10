@@ -7,7 +7,7 @@ export async function handleLive(req, res) {
   res.setHeader('Connection', 'keep-alive')
 
     const sendPrice = () => {
-        const price = (Math.random() * 1000 + 1000).toFixed(2);
+        const price = (Math.random() * 100 + 2000).toFixed(2);
         res.write(`data: ${JSON.stringify({ price })}\n\n`);
     }
 
