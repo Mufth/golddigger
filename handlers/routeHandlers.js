@@ -1,3 +1,13 @@
+import { buyEventEmitter } from '../events/buyEvent.js'
+
+// Example: /buy endpoint
+export async function handleBuy(req, res) {
+  const { price } = req.body;
+  buyEventEmitter.emit('buy', price); // Emit the event
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify({ message: `Buy event emitted with price: ${price}` }));
+}
 
 
 export async function handleLive(req, res) {

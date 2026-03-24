@@ -14,7 +14,18 @@ const server = http.createServer(async (req, res) => {
         const { handleLive } = await import('./handlers/routeHandlers.js');
         return handleLive(req, res);
     }
-  await serveStatic(req, res, __dirname);
+    if (req.url === '/buy' && req.method === 'POST') {
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+        req.on('end', async () => {
+            const { handleBuy } = await import('./handlers/routeHandlers.js');
+            const data = JSON.parse(body);
+            await handleBuy({ ...req, body: data }, res);
+        });
+    }
+    await serveStatic(req, res, __dirname);
 });
 
 server.listen(PORT, () => {
